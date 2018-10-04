@@ -10,7 +10,9 @@ int main() {
     return 0;
 }
 #endif // TEST
-
+int subnumber(int a, int b) {
+    return a-b;
+}
 int addNumber(int a, int b) {
     return a + b;
 }
