@@ -1,10 +1,8 @@
 package com.example.shockdotjava.selecthelper;
 
-import android.content.Intent;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Random;
+
 
 public class Selection implements Comparable<Selection>
 {
@@ -65,12 +63,38 @@ public class Selection implements Comparable<Selection>
 		return this.score - other.score;
 	}
 
-	//-----------------unfinished-------------------------------
-
 	public void clacScore(Selection setting)
 	{
-		Random random = new Random();
-		this.score = random.nextInt();
+		switch(setting.SelectionName())
+		{
+			case "Food" :
+				this.score = FoodTypeScore(setting);
+				break;
+			case "Drink" :
+				this.score = DrinkTypeScore(setting);
+				break;
+			case "Other" :
+				this.score = OtherTypeScore(setting);
+				break;
+		}
+	}
+	//-----------------unfinished-------------------------------
+	private int FoodTypeScore(Selection setting)
+	{
+		int score = 0;
+		return score;
+	}
+
+	private int DrinkTypeScore(Selection setting)
+	{
+		int score = 0;
+		return score;
+	}
+
+	private int OtherTypeScore(Selection setting)
+	{
+		int score = 0;
+		return score;
 	}
 
 }
