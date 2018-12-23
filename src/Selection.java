@@ -125,6 +125,41 @@ public class Selection implements Comparable<Selection>
 	{
 		int score = 0;
 		int i;
+		for(i=0;i<7;i++)
+		{
+		    if(setting.setting[0][i].indexOf(Answers[0])!=-1)
+		    {
+		    	score+=setting.getWeight(0,i);
+		    }
+		}
+		for(i=0;i<1;i++)
+		{
+		    if(setting.setting[1][i].indexOf(Answers[1])!=-1)
+		    {
+		    	score+=setting.getWeight(1,i);
+		    }
+		}
+		for(i=0;i<3;i++)
+		{
+		    if(setting.setting[2][i].indexOf(Answers[2])!=-1)
+		    {
+		    	score+=setting.getWeight(2,i);
+		    }
+		}
+		for(i=0;i<2;i++)
+		{
+		    if(setting.setting[3][i].indexOf(Answers[3])!=-1)
+		    {
+		    	score+=setting.getWeight(3,i);
+		    }
+		}
+		for(i=0;i<4;i++)
+		{
+		    if(setting.setting[4][i].indexOf(Answers[4])!=-1)
+		    {
+		    	score+=setting.getWeight(4,i);
+		    }
+		}
 		return score;
 	}
 
@@ -132,6 +167,20 @@ public class Selection implements Comparable<Selection>
 	{
 		int score = 0;
 		int i;
+		for(i=0;i<7;i++)
+		{
+		    if(setting.setting[0][i].indexOf(Answers[0])!=-1)
+		    {
+		    	score+=setting.getWeight(0,i);
+		    }
+		}
+		for(i=0;i<4;i++)
+		{
+		    if(setting.setting[1][i].indexOf(Answers[1])!=-1)
+		    {
+		    	score+=setting.getWeight(1,i);
+		    }
+		}
 		return score;
 	}
 
