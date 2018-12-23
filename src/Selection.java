@@ -79,19 +79,19 @@ public class Selection implements Comparable<Selection>
 		}
 	}
 	//-----------------unfinished-------------------------------
-	private int FoodTypeScore(Selection setting)
+	private int FoodTypeScore(Setting setting)
 	{
 		int score = 0;
 		return score;
 	}
 
-	private int DrinkTypeScore(Selection setting)
+	private int DrinkTypeScore(Setting setting)
 	{
 		int score = 0;
 		return score;
 	}
 
-	private int OtherTypeScore(Selection setting)
+	private int OtherTypeScore(Setting setting)
 	{
 		int score = 0;
 		return score;
