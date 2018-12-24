@@ -13,7 +13,7 @@ public class DataBase
 		int Max_Price;
 		boolean Hot;
 		boolean Rice;
-		int Full;// Ôñ◊„∏– 0-5 –°÷¡¥Û
+		int Full;// È£ΩË∂≥ÊÑü 0-2 ‰Ωé‰∏≠È´ò
 		int Max_Waiting_Time;// Counting in Mins
 	}
 	public class Drink
@@ -21,13 +21,21 @@ public class DataBase
 		int Max_Price;
 		boolean Hot;
 		String Addon;
-		int Quantity;// ∑›¡ø 0-5 –°÷¡¥Û
+		int Quantity;// ‰ªΩÈáè 0-2 Â∞èËá≥Â§ß
 		int Max_Waiting_Time;// Counting in Mins
 	}
 	public class Other
 	{
 		int Max_Price;
 		int Max_Waiting_Time;// Counting in Mins
+	}
+	
+	public class GroupNode
+	{
+		GroupNode next;
+		Node first;
+		String name;
+		int Type;
 	}
 
 	public class Node
@@ -38,10 +46,20 @@ public class DataBase
 		Drink Drink_Choosen;
 		Other Other_Choosen;
 
-		int Order_Number;// ”ÜÜŒæéÃñ
-		int Type;
+		int Order_Number;// Ë®ÇÂñÆÁ∑®Ëôü
 	}
-	private Node First;
+	
+	/*
+	*GN-GN-GN-GN-GN
+	* |  |  |  |  |
+	* N...
+	* N.
+	* N.
+	* N.
+	
+	*/
+	
+	private GroupNode First;
 
 	// Type will define as 0 = Food, 1 = Drink, 2 = Others
 	// Questions // Food Example
@@ -54,7 +72,32 @@ public class DataBase
 	 *	   int Max_Waiting_Time = 20;
 	 * }
 	 */
-	public void add(int Type, Questions Ans, int Order_Number)
+	
+	public void addGNode(SelectionGroup sg)
+	{
+		GroupNode temp = new GroupNode();
+		switch(sg.GroupType())
+		{
+			case "Food":
+				temp.Type = 0;
+				break;
+			case "Drink":
+				temp.Type = 1;
+				break;
+			case "Other":
+				temp.Type = 2;
+				break;
+		}
+		temp.name = sg.GroupName();
+		int i = 0;
+		for(Selection s : sg.getSelections())
+		{
+			addNode(temp.Type, s, i);
+			i++;
+		}
+	}
+	
+	public void addNode(GroupNode GN, int Type, Selection Ans, int Order_Number)
 	{
 		System.out.print("Inserting.\n");
 		Node temp = new Node();
@@ -64,11 +107,23 @@ public class DataBase
 			case 0://Food
 			{
 				//temp.Food_Choosen = Ans;
-				temp.Food_Choosen.Max_Price = Ans.Max_Price;
-				temp.Food_Choosen.Hot = Ans.Hot;
-				temp.Food_Choosen.Rice = Ans.Rice;
-				temp.Food_Choosen.Full = Ans.Full;
-				temp.Food_Choosen.Max_Waiting_Time = Ans.Max_Waiting_Time;
+				temp.Food_Choosen.Max_Price = Integer.parseInt(Ans.getAnswerOf(0));
+				temp.Food_Choosen.Hot = Ans.getAnswerOf(1).equals("ÁÜ±");
+				temp.Food_Choosen.Rice = Ans.getAnswerOf(2).equals("È£Ø");
+				switch(Ans.getAnswerOf(3))
+				{
+					case "‰Ωé" :
+						temp.Food_Choosen.Full = 0;
+						break;
+					case "‰∏≠" :
+						temp.Food_Choosen.Full = 1;
+						break;
+					case "È´ò" :
+						temp.Food_Choosen.Full = 2;
+						break;
+						
+				}
+				temp.Food_Choosen.Max_Waiting_Time = Integer.parseInt(Ans.getAnswerOf(4));
 
 				temp.Drink_Choosen = null;
 				temp.Other_Choosen = null;
@@ -81,11 +136,23 @@ public class DataBase
 				temp.Food_Choosen = null;
 
 				//temp.Drink_Choosen = Ans;
-				temp.Drink_Choosen.Max_Price = Ans.Max_Price;
-				temp.Drink_Choosen.Hot = Ans.Hot;
-				temp.Drink_Choosen.Addon = Ans.Addon;
-				temp.Drink_Choosen.Quantity = Ans.Quantity;
-				temp.Drink_Choosen.Max_Waiting_Time = Ans.Max_Waiting_Time;
+				temp.Drink_Choosen.Max_Price = Integer.parseInt(Ans.getAnswerOf(0));
+				temp.Drink_Choosen.Hot = Ans.getAnswerOf(1).equals("ÁÜ±");
+				temp.Drink_Choosen.Addon = Ans.getAnswerOf(2);
+				switch(Ans.getAnswerOf(3))
+				{
+					case "Â∞è" :
+						temp.Drink_Choosen.Quantity = 0;
+						break;
+					case "‰∏≠" :
+						temp.Drink_Choosen.Quantity = 1;
+						break;
+					case "Â§ß" :
+						temp.Drink_Choosen.Quantity = 2;
+						break;
+						
+				}
+				temp.Drink_Choosen.Max_Waiting_Time = Integer.parseInt(Ans.getAnswerOf(4));
 
 				temp.Other_Choosen = null;
 
@@ -98,8 +165,8 @@ public class DataBase
 				temp.Drink_Choosen = null;
 
 				//temp.Other_Choosen = Ans;
-				temp.Other_Choosen.Max_Price = Ans.Max_Price;
-				temp.Other_Choosen.Max_Waiting_Time = Ans.Max_Waiting_Time;
+				temp.Other_Choosen.Max_Price = Integer.parseInt(Ans.getAnswerOf(0));
+				temp.Other_Choosen.Max_Waiting_Time = Integer.parseInt(Ans.getAnswerOf(1));
 
 				break;
 			}
@@ -110,15 +177,14 @@ public class DataBase
 				break;
 			}
 		}
-		temp.Type = Type;
 		temp.Order_Number = Order_Number;
 
-		if (First == null)
-			First = temp;
+		if (GN.first == null)
+			GN.first = temp;
 
 		else
 		{
-			Node Last = First;
+			Node Last = GN.first;
 
 			while (Last.next != null)
 				Last = Last.next;
