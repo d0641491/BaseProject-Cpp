@@ -1,5 +1,4 @@
-package com.example.shockdotjava.selecthelper;
-
+package test;
 
 import java.util.ArrayList;
 
@@ -63,9 +62,9 @@ public class Selection implements Comparable<Selection>
 		return this.score - other.score;
 	}
 
-	public void clacScore(Selection setting)
+	public void clacScore(String type, Setting setting)
 	{
-		switch(setting.SelectionName())
+		switch(type)
 		{
 			case "Food" :
 				this.score = FoodTypeScore(setting);
@@ -83,21 +82,21 @@ public class Selection implements Comparable<Selection>
 	{
 		int score = 0;
 		
-		score += (Integer.parseInt(setting.setting.get(0).getAnswerOf(0))-Integer.parseInt(this.getAnswerOf(0)) / 50 ) * setting.getWeight("Food", 0);//price score
-		if(setting.setting.get(0).getAnswerOf(1).equals(this.getAnswerOf(1)))
+		score += (Integer.parseInt(setting.getSettingByType("Food").getAnswerOf(0))-Integer.parseInt(this.getAnswerOf(0)) / 50 ) * setting.getWeight("Food", 0);//price score
+		if(setting.getSettingByType("Food").getAnswerOf(1).equals(this.getAnswerOf(1)))
 		{
 			score += setting.getWeight("Food", 1);
 		}
-		if(setting.setting.get(0).getAnswerOf(2).equals(this.getAnswerOf(2)))
+		if(setting.getSettingByType("Food").getAnswerOf(2).equals(this.getAnswerOf(2)))
 		{
 			score += setting.getWeight("Food", 2);
 		}
-		if(setting.setting.get(0).getAnswerOf(3).equals(this.getAnswerOf(3)))
+		if(setting.getSettingByType("Food").getAnswerOf(3).equals(this.getAnswerOf(3)))
 		{
 			score += setting.getWeight("Food", 3);
 		}
 		
-		score += (Integer.parseInt(setting.setting.get(0).getAnswerOf(4))-Integer.parseInt(this.getAnswerOf(4))) * setting.getWeight("Food", 4);//time score
+		score += (Integer.parseInt(setting.getSettingByType("Food").getAnswerOf(4))-Integer.parseInt(this.getAnswerOf(4))) * setting.getWeight("Food", 4);//time score
 		score += this.selectedTimes / 5;
 		
 		return score;
@@ -107,21 +106,21 @@ public class Selection implements Comparable<Selection>
 	{
 		int score = 0;
 		
-		score += (Integer.parseInt(setting.setting.get(1).getAnswerOf(0))-Integer.parseInt(this.getAnswerOf(0)) / 10 ) * setting.getWeight("Drink", 0);//price score
-		if(setting.setting.get(1).getAnswerOf(1).equals(this.getAnswerOf(1)))
+		score += (Integer.parseInt(setting.getSettingByType("Drink").getAnswerOf(0))-Integer.parseInt(this.getAnswerOf(0)) / 10 ) * setting.getWeight("Drink", 0);//price score
+		if(setting.getSettingByType("Drink").getAnswerOf(1).equals(this.getAnswerOf(1)))
 		{
 			score += setting.getWeight("Drink", 1);
 		}
-		if(setting.setting.get(1).getAnswerOf(2).equals(this.getAnswerOf(2)))
+		if(setting.getSettingByType("Drink").getAnswerOf(2).equals(this.getAnswerOf(2)))
 		{
 			score += setting.getWeight("Drink", 2);
 		}
-		if(setting.setting.get(1).getAnswerOf(3).equals(this.getAnswerOf(3)))
+		if(setting.getSettingByType("Drink").getAnswerOf(3).equals(this.getAnswerOf(3)))
 		{
 			score += setting.getWeight("Drink", 3);
 		}
 		
-		score += (Integer.parseInt(setting.setting.get(1).getAnswerOf(4))-Integer.parseInt(this.getAnswerOf(4))) * setting.getWeight("Drink", 4);//time score
+		score += (Integer.parseInt(setting.getSettingByType("Drink").getAnswerOf(4))-Integer.parseInt(this.getAnswerOf(4))) * setting.getWeight("Drink", 4);//time score
 		score += this.selectedTimes / 5;
 		return score;
 	}
@@ -130,9 +129,9 @@ public class Selection implements Comparable<Selection>
 	{
 		int score = 0;
 		
-		score += (Integer.parseInt(setting.setting.get(2).getAnswerOf(0))-Integer.parseInt(this.getAnswerOf(0)) / 50 ) * setting.getWeight("Otherk", 0);//price score
+		score += (Integer.parseInt(setting.getSettingByType("Other").getAnswerOf(0))-Integer.parseInt(this.getAnswerOf(0)) / 50 ) * setting.getWeight("Otherk", 0);//price score
 		
-		score += (Integer.parseInt(setting.setting.get(2).getAnswerOf(1))-Integer.parseInt(this.getAnswerOf(1))) * setting.getWeight("Other", 1);//time score
+		score += (Integer.parseInt(setting.getSettingByType("Other").getAnswerOf(1))-Integer.parseInt(this.getAnswerOf(1))) * setting.getWeight("Other", 1);//time score
 		score += this.selectedTimes / 5;
 		return score;
 	}

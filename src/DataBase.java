@@ -1,10 +1,14 @@
+package test;
+
+import java.util.ArrayList;
+
 //package DataBase;
 /*
- * If The Program Cant Work, Please Contect Me at Line ID: Kuteng_F.
- * Or read comments, See if it helps.
- *
- * Written at 21/12/2018, 08:46 PM
- */
+* If The Program Cant Work, Please Contect Me at Line ID: Kuteng_F.
+* Or read comments, See if it helps.
+*
+* Written at 21/12/2018, 08:46 PM
+*/
 
 public class DataBase
 {
@@ -13,7 +17,7 @@ public class DataBase
 		int Max_Price;
 		boolean Hot;
 		boolean Rice;
-		int Full;// È£ΩË∂≥ÊÑü 0-2 ‰Ωé‰∏≠È´ò
+		int Full;// π°®¨∑P 0-2 ßC§§∞™
 		int Max_Waiting_Time;// Counting in Mins
 	}
 	public class Drink
@@ -21,7 +25,7 @@ public class DataBase
 		int Max_Price;
 		boolean Hot;
 		String Addon;
-		int Quantity;// ‰ªΩÈáè 0-2 Â∞èËá≥Â§ß
+		int Quantity;// •˜∂q 0-2 §p¶‹§j
 		int Max_Waiting_Time;// Counting in Mins
 	}
 	public class Other
@@ -42,11 +46,11 @@ public class DataBase
 	{
 		Node next;
 
-		Food Food_Choosen;
-		Drink Drink_Choosen;
-		Other Other_Choosen;
+		Food Food_Choosen = new Food();
+		Drink Drink_Choosen = new Drink();
+		Other Other_Choosen = new Other();
 
-		int Order_Number;// Ë®ÇÂñÆÁ∑®Ëôü
+		int Order_Number;// ≠q≥ÊΩs∏π
 	}
 	
 	/*
@@ -92,9 +96,23 @@ public class DataBase
 		int i = 0;
 		for(Selection s : sg.getSelections())
 		{
-			addNode(temp.Type, s, i);
+			addNode(temp, temp.Type, s, i);
 			i++;
 		}
+		
+		if (First == null)
+			First = temp;
+
+		else
+		{
+			GroupNode Last = First;
+
+			while (Last.next != null)
+				Last = Last.next;
+
+			Last.next = temp;
+		}
+		System.out.print("Done.\n");
 	}
 	
 	public void addNode(GroupNode GN, int Type, Selection Ans, int Order_Number)
@@ -108,17 +126,17 @@ public class DataBase
 			{
 				//temp.Food_Choosen = Ans;
 				temp.Food_Choosen.Max_Price = Integer.parseInt(Ans.getAnswerOf(0));
-				temp.Food_Choosen.Hot = Ans.getAnswerOf(1).equals("ÁÜ±");
-				temp.Food_Choosen.Rice = Ans.getAnswerOf(2).equals("È£Ø");
+				temp.Food_Choosen.Hot = Ans.getAnswerOf(1).equals("ºˆ");
+				temp.Food_Choosen.Rice = Ans.getAnswerOf(2).equals("∂∫");
 				switch(Ans.getAnswerOf(3))
 				{
-					case "‰Ωé" :
+					case "ßC" :
 						temp.Food_Choosen.Full = 0;
 						break;
-					case "‰∏≠" :
+					case "§§" :
 						temp.Food_Choosen.Full = 1;
 						break;
-					case "È´ò" :
+					case "∞™" :
 						temp.Food_Choosen.Full = 2;
 						break;
 						
@@ -137,17 +155,17 @@ public class DataBase
 
 				//temp.Drink_Choosen = Ans;
 				temp.Drink_Choosen.Max_Price = Integer.parseInt(Ans.getAnswerOf(0));
-				temp.Drink_Choosen.Hot = Ans.getAnswerOf(1).equals("ÁÜ±");
+				temp.Drink_Choosen.Hot = Ans.getAnswerOf(1).equals("ºˆ");
 				temp.Drink_Choosen.Addon = Ans.getAnswerOf(2);
 				switch(Ans.getAnswerOf(3))
 				{
-					case "Â∞è" :
+					case "§p" :
 						temp.Drink_Choosen.Quantity = 0;
 						break;
-					case "‰∏≠" :
+					case "§§" :
 						temp.Drink_Choosen.Quantity = 1;
 						break;
-					case "Â§ß" :
+					case "§j" :
 						temp.Drink_Choosen.Quantity = 2;
 						break;
 						
@@ -193,108 +211,19 @@ public class DataBase
 		}
 		System.out.print("Done.\n");
 	}
-
-	public void delete(int Order_Number)
+	
+	public ArrayList<SelectionGroup> DBToGroups()
 	{
-		System.out.print("Deleting.\n");
-		boolean Found_Flag = false;
-
-		Node Last = First;
-		Node Prev = First;
-
-		while (Last.next != null)
-		{
-			if (Last.Order_Number == Order_Number)
-			{
-				Prev.next = Last.next;
-				Last = null;
-				Found_Flag = true;
-				break;
-			}
-
-			Prev = Last;
-			Last = Last.next;
-		}
-
-		if (Found_Flag == false)
-			System.out.print("Object Can't Found!\n");
-
-		else
-			System.out.print("Done.\n");
+		ArrayList<SelectionGroup> groups = new ArrayList<SelectionGroup>();
+		return groups;
 	}
-	// Please Put the Value you want to Change IN the Class Questions
-	// Check the Class Format above
+	
+	public void GroupsToDB(ArrayList<SelectionGroup> groups)
+	{
+		
+	}
+
 	/*
-	 * The Program in this file expect it had done.
-	 */
-	public void change(Questions Ans, int Order_Number)
-	{
-		System.out.print("Changing.\n");
-		boolean Found_Flag = false;
-
-		Node Last = First;
-
-		while (Last.next != null)
-		{
-			if (Last.Order_Number == Order_Number)
-			{
-				switch (Last.Type)
-				{
-					case 0:// Food
-					{
-						//Last.Food_Choosen = Ans;
-
-						Last.Food_Choosen.Max_Price = Ans.Max_Price;
-						Last.Food_Choosen.Hot = Ans.Hot;
-						Last.Food_Choosen.Rice = Ans.Rice;
-						Last.Food_Choosen.Full = Ans.Full;
-						Last.Food_Choosen.Max_Waiting_Time = Ans.Max_Waiting_Time;
-
-						break;
-					}
-
-					case 1:
-					{
-						//Last.Drink_Choosen = Ans;
-
-						Last.Drink_Choosen.Max_Price = Ans.Max_Price;
-						Last.Drink_Choosen.Hot = Ans.Hot;
-						Last.Drink_Choosen.Addon = Ans.Addon;
-						Last.Drink_Choosen.Quantity = Ans.Quantity;
-						Last.Drink_Choosen.Max_Waiting_Time = Ans.Max_Waiting.Time;
-
-						break;
-					}
-
-					case 2:
-					{
-						//Last.Other_Choosen = Ans;
-
-						Last.Other_Choosen.Max_Price = Ans.Max_Price;
-						Last.Other_Choosen.Max_Waiting_Time = Ans.Max_Price;
-
-						break;
-					}
-
-					default:
-					{
-						System.out.print("Type Wrong, Please Check.\n");
-						break;
-					}
-				}
-				Found_Flag = true;
-				break;
-			}
-
-			Last = Last.next;
-		}
-
-		if (Found_Flag == false)
-			System.out.print("Object Can't Found!\n");
-
-		else
-			System.out.print("Done.\n");
-	}
 
 	public void view(int Order_Number)
 	{
@@ -397,95 +326,107 @@ public class DataBase
 		else
 			System.out.print("Done.\n");
 	}
+	*/
 
 	public void view_all()
 	{
 		System.out.print("Printing.\n");
 
-		Node Last = First;
-
-		while (Last.next != null)
+		GroupNode GLast = First;
+		while(GLast != null)
 		{
-			switch (Last.Type)
+			//System.out.println("1561655");
+			Node Last = GLast.first;
+			while (Last != null)
 			{
-				case 0:// Food
+				//System.out.println("19844984654985");
+				switch (GLast.Type)
 				{
-					System.out.print("Food:\n");
+					case 0:// Food
+					{
+						System.out.print("Food:\n");
 
-					System.out.print("Max Price: ");
-					System.out.print(Last.Food_Choosen.Max_Price);
-					System.out.print("\n");
+						System.out.print("Max Price: ");
+						System.out.print(Last.Food_Choosen.Max_Price);
+						System.out.print("\n");
 
-					System.out.print("Hot: ");
-					System.out.print(Last.Food_Choosen.Hot);
-					System.out.print("\n");
+						System.out.print("Hot: ");
+						System.out.print(Last.Food_Choosen.Hot);
+						System.out.print("\n");
 
-					System.out.print("Rice: ");
-					System.out.print(Last.Food_Choosen.Rice);
-					System.out.print("\n");
+						System.out.print("Rice: ");
+						System.out.print(Last.Food_Choosen.Rice);
+						System.out.print("\n");
 
-					System.out.print("Full: ");
-					System.out.print(Last.Food_Choosen.Full);
-					System.out.print("\n");
+						System.out.print("Full: ");
+						System.out.print(Last.Food_Choosen.Full);
+						System.out.print("\n");
 
-					System.out.print("Max Waiting Time: ");
-					System.out.print(Last.Food_Choosen.Max_Waiting_Time);
-					System.out.print("\n");
+						System.out.print("Max Waiting Time: ");
+						System.out.print(Last.Food_Choosen.Max_Waiting_Time);
+						System.out.print("\n");
 
-					break;
+						break;
+					}
+
+					case 1:
+					{
+						System.out.print("Drink:\n");
+
+						System.out.print("Max Price: ");
+						System.out.print(Last.Drink_Choosen.Max_Price);
+						System.out.print("\n");
+
+						System.out.print("Hot: ");
+						System.out.print(Last.Drink_Choosen.Hot);
+						System.out.print("\n");
+
+						System.out.print("Addon: ");
+						System.out.print(Last.Drink_Choosen.Addon);
+						System.out.print("\n");
+
+						System.out.print("Quantity: ");
+						System.out.print(Last.Drink_Choosen.Quantity);
+						System.out.print("\n");
+
+						System.out.print("Max Waiting Time: ");
+						System.out.print(Last.Drink_Choosen.Max_Waiting_Time);
+						System.out.print("\n");
+
+						break;
+					}
+
+					case 2:
+					{
+						System.out.print("Others:\n");
+
+						System.out.print("Max Price: ");
+						System.out.print(Last.Other_Choosen.Max_Price);
+						System.out.print("\n");
+
+						System.out.print("Max Waiting Time: ");
+						System.out.print(Last.Other_Choosen.Max_Waiting_Time);
+						System.out.print("\n");
+
+						break;
+					}
+
+					default:
+					{
+						System.out.print("Type Wrong, Please Check.\n");
+						break;
+					}
 				}
 
-				case 1:
-				{
-					System.out.print("Drink:\n");
-
-					System.out.print("Max Price: ");
-					System.out.print(Last.Drink_Choosen.Max_Price);
-					System.out.print("\n");
-
-					System.out.print("Hot: ");
-					System.out.print(Last.Drink_Choosen.Hot);
-					System.out.print("\n");
-
-					System.out.print("Addon: ");
-					System.out.print(Last.Drink_Choosen.Addon);
-					System.out.print("\n");
-
-					System.out.print("Quantity: ");
-					System.out.print(Last.Drink_Choosen.Quantity);
-					System.out.print("\n");
-
-					System.out.print("Max Waiting Time: ");
-					System.out.print(Last.Drink_Choosen.Max_Waiting_Time);
-					System.out.print("\n");
-
-					break;
-				}
-
-				case 2:
-				{
-					System.out.print("Others:\n");
-
-					System.out.print("Max Price: ");
-					System.out.print(Last.Other_Choosen.Max_Price);
-					System.out.print("\n");
-
-					System.out.print("Max Waiting Time: ");
-					System.out.print(Last.Other_Choosen.Max_Waiting_Time);
-					System.out.print("\n");
-
-					break;
-				}
-
-				default:
-				{
-					System.out.print("Type Wrong, Please Check.\n");
-					break;
-				}
+				Last = Last.next;
 			}
-
-			Last = Last.next;
+			
+			GLast = GLast.next;
 		}
+
+		
 		System.out.print("Done.\n");
 	}
+	
 }
+
