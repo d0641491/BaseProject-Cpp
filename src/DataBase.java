@@ -19,6 +19,39 @@ public class DataBase
 		boolean Rice;
 		int Full;// 飽足感 0-2 低中高
 		int Max_Waiting_Time;// Counting in Mins
+		public String getMax_Price()
+		{
+			return String.valueOf(Max_Price);
+		}
+		public String getHot()
+		{
+			if(Hot)
+				return "熱";
+			return "冷";
+		}
+		public String getRice()
+		{
+			if(Rice)
+				return "飯";
+			return "麵";
+		}
+		public String getFull()
+		{
+			switch(Full)
+			{
+				case 0 :
+					return "低";
+				case 1 :
+					return "中";
+				case 2 :
+					return "高";
+			}
+			return "";
+		}
+		public String getTime()
+		{
+			return String.valueOf(Max_Waiting_Time);
+		}
 	}
 	public class Drink
 	{
@@ -27,11 +60,49 @@ public class DataBase
 		String Addon;
 		int Quantity;// 份量 0-2 小至大
 		int Max_Waiting_Time;// Counting in Mins
+		
+		public String getMax_Price()
+		{
+			return String.valueOf(Max_Price);
+		}
+		public String getHot()
+		{
+			if(Hot)
+				return "熱";
+			return "冷";
+		}
+		public String getQuantity()
+		{
+			switch(Quantity)
+			{
+				case 0 :
+					return "小";
+				case 1 :
+					return "中";
+				case 2 :
+					return "大";
+			}
+			return "";
+		}
+		public String getTime()
+		{
+			return String.valueOf(Max_Waiting_Time);
+		}
 	}
 	public class Other
 	{
 		int Max_Price;
 		int Max_Waiting_Time;// Counting in Mins
+		
+		public String getMax_Price()
+		{
+			return String.valueOf(Max_Price);
+		}
+		
+		public String getTime()
+		{
+			return String.valueOf(Max_Waiting_Time);
+		}
 	}
 	
 	public class GroupNode
@@ -40,16 +111,36 @@ public class DataBase
 		Node first;
 		String name;
 		int Type;
+		
+		public String getType()
+		{
+			String type = "N/A";
+			switch(this.Type)
+			{
+				case 0 :
+					type = "Food";
+					break;
+				case 1 :
+					type = "Drink";
+					break;
+				case 2 :
+					type = "Other";
+					break;
+			}
+			return type;
+		}
 	}
 
 	public class Node
 	{
 		Node next;
-
+		String name;
 		Food Food_Choosen = new Food();
 		Drink Drink_Choosen = new Drink();
 		Other Other_Choosen = new Other();
 
+		int selectedTime;
+		int score;
 		int Order_Number;// 訂單編號
 	}
 	
@@ -120,6 +211,9 @@ public class DataBase
 		System.out.print("Inserting.\n");
 		Node temp = new Node();
 
+		temp.name = Ans.SelectionName();
+		temp.selectedTime = Ans.getSelectedTimes();
+		temp.score = Ans.getScore();
 		switch(Type)
 		{
 			case 0://Food
@@ -215,12 +309,54 @@ public class DataBase
 	public ArrayList<SelectionGroup> DBToGroups()
 	{
 		ArrayList<SelectionGroup> groups = new ArrayList<SelectionGroup>();
+		GroupNode gTemp = First;
+		while(gTemp != null)
+		{
+			
+			SelectionGroup sg = new SelectionGroup(gTemp.name, gTemp.getType());
+			Node temp = gTemp.first;
+			while(temp != null)
+			{
+				Selection s = new Selection(temp.name);
+				switch(gTemp.Type)
+				{
+					case 0 :
+						s.addAnswerToSelection(temp.Food_Choosen.getMax_Price());
+						s.addAnswerToSelection(temp.Food_Choosen.getHot());
+						s.addAnswerToSelection(temp.Food_Choosen.getRice());
+						s.addAnswerToSelection(temp.Food_Choosen.getFull());
+						s.addAnswerToSelection(temp.Food_Choosen.getTime());
+						break;
+					case 1 :
+						s.addAnswerToSelection(temp.Drink_Choosen.getMax_Price());
+						s.addAnswerToSelection(temp.Drink_Choosen.getHot());
+						s.addAnswerToSelection(temp.Drink_Choosen.Addon);
+						s.addAnswerToSelection(temp.Drink_Choosen.getQuantity());
+						s.addAnswerToSelection(temp.Drink_Choosen.getTime());
+						break;
+					case 2 :
+						s.addAnswerToSelection(temp.Other_Choosen.getMax_Price());
+						s.addAnswerToSelection(temp.Other_Choosen.getTime());
+						break;
+				}
+				sg.addSelectionToGroup(s);
+				
+				temp = temp.next;
+			}
+			groups.add(sg);
+			
+			gTemp =  gTemp.next;
+		}
+		
 		return groups;
 	}
 	
 	public void GroupsToDB(ArrayList<SelectionGroup> groups)
 	{
-		
+		for(SelectionGroup g : groups)
+		{
+			this.addGNode(g);
+		}
 	}
 
 	/*
