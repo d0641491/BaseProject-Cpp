@@ -98,6 +98,7 @@ public class Selection implements Comparable<Selection>
 		}
 		
 		score += (Integer.parseInt(setting.setting.get(0).getAnswerOf(4))-Integer.parseInt(this.getAnswerOf(4))) * setting.getWeight("Food", 4);//time score
+		score += this.selectedTimes / 5;
 		
 		return score;
 	}
@@ -121,7 +122,7 @@ public class Selection implements Comparable<Selection>
 		}
 		
 		score += (Integer.parseInt(setting.setting.get(1).getAnswerOf(4))-Integer.parseInt(this.getAnswerOf(4))) * setting.getWeight("Drink", 4);//time score
-		
+		score += this.selectedTimes / 5;
 		return score;
 	}
 
@@ -132,7 +133,7 @@ public class Selection implements Comparable<Selection>
 		score += (Integer.parseInt(setting.setting.get(2).getAnswerOf(0))-Integer.parseInt(this.getAnswerOf(0)) / 50 ) * setting.getWeight("Otherk", 0);//price score
 		
 		score += (Integer.parseInt(setting.setting.get(2).getAnswerOf(1))-Integer.parseInt(this.getAnswerOf(1))) * setting.getWeight("Other", 1);//time score
-		
+		score += this.selectedTimes / 5;
 		return score;
 	}
 
