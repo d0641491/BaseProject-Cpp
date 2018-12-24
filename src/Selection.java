@@ -82,105 +82,57 @@ public class Selection implements Comparable<Selection>
 	private int FoodTypeScore(Setting setting)
 	{
 		int score = 0;
-		int i;
-		for(i=0;i<7;i++)
+		
+		score += (Integer.parseInt(setting.setting.get(0).getAnswerOf(0))-Integer.parseInt(this.getAnswerOf(0)) / 50 ) * setting.getWeight("Food", 0);//price score
+		if(setting.setting.get(0).getAnswerOf(1).equals(this.getAnswerOf(1)))
 		{
-		    if(setting.setting[0][i].indexOf(Answers[0])!=-1)
-		    {
-		    	score+=setting.getWeight(0,i);
-		    }
+			score += setting.getWeight("Food", 1);
 		}
-		for(i=0;i<1;i++)
+		if(setting.setting.get(0).getAnswerOf(2).equals(this.getAnswerOf(2)))
 		{
-		    if(setting.setting[1][i].indexOf(Answers[1])!=-1)
-		    {
-		    	score+=setting.getWeight(1,i);
-		    }
+			score += setting.getWeight("Food", 2);
 		}
-		for(i=0;i<1;i++)
+		if(setting.setting.get(0).getAnswerOf(3).equals(this.getAnswerOf(3)))
 		{
-		    if(setting.setting[2][i].indexOf(Answers[2])!=-1)
-		    {
-		    	score+=setting.getWeight(2,i);
-		    }
+			score += setting.getWeight("Food", 3);
 		}
-		for(i=0;i<2;i++)
-		{
-		    if(setting.setting[3][i].indexOf(Answers[3])!=-1)
-		    {
-		    	score+=setting.getWeight(3,i);
-		    }
-		}
-		for(i=0;i<4;i++)
-		{
-		    if(setting.setting[4][i].indexOf(Answers[4])!=-1)
-		    {
-		    	score+=setting.getWeight(4,i);
-		    }
-		}
+		
+		score += (Integer.parseInt(setting.setting.get(0).getAnswerOf(4))-Integer.parseInt(this.getAnswerOf(4))) * setting.getWeight("Food", 4);//time score
+		
 		return score;
 	}
 
 	private int DrinkTypeScore(Setting setting)
 	{
 		int score = 0;
-		int i;
-		for(i=0;i<7;i++)
+		
+		score += (Integer.parseInt(setting.setting.get(1).getAnswerOf(0))-Integer.parseInt(this.getAnswerOf(0)) / 10 ) * setting.getWeight("Drink", 0);//price score
+		if(setting.setting.get(1).getAnswerOf(1).equals(this.getAnswerOf(1)))
 		{
-		    if(setting.setting[0][i].indexOf(Answers[0])!=-1)
-		    {
-		    	score+=setting.getWeight(0,i);
-		    }
+			score += setting.getWeight("Drink", 1);
 		}
-		for(i=0;i<1;i++)
+		if(setting.setting.get(1).getAnswerOf(2).equals(this.getAnswerOf(2)))
 		{
-		    if(setting.setting[1][i].indexOf(Answers[1])!=-1)
-		    {
-		    	score+=setting.getWeight(1,i);
-		    }
+			score += setting.getWeight("Drink", 2);
 		}
-		for(i=0;i<3;i++)
+		if(setting.setting.get(1).getAnswerOf(3).equals(this.getAnswerOf(3)))
 		{
-		    if(setting.setting[2][i].indexOf(Answers[2])!=-1)
-		    {
-		    	score+=setting.getWeight(2,i);
-		    }
+			score += setting.getWeight("Drink", 3);
 		}
-		for(i=0;i<2;i++)
-		{
-		    if(setting.setting[3][i].indexOf(Answers[3])!=-1)
-		    {
-		    	score+=setting.getWeight(3,i);
-		    }
-		}
-		for(i=0;i<4;i++)
-		{
-		    if(setting.setting[4][i].indexOf(Answers[4])!=-1)
-		    {
-		    	score+=setting.getWeight(4,i);
-		    }
-		}
+		
+		score += (Integer.parseInt(setting.setting.get(1).getAnswerOf(4))-Integer.parseInt(this.getAnswerOf(4))) * setting.getWeight("Drink", 4);//time score
+		
 		return score;
 	}
 
 	private int OtherTypeScore(Setting setting)
 	{
 		int score = 0;
-		int i;
-		for(i=0;i<7;i++)
-		{
-		    if(setting.setting[0][i].indexOf(Answers[0])!=-1)
-		    {
-		    	score+=setting.getWeight(0,i);
-		    }
-		}
-		for(i=0;i<4;i++)
-		{
-		    if(setting.setting[1][i].indexOf(Answers[1])!=-1)
-		    {
-		    	score+=setting.getWeight(1,i);
-		    }
-		}
+		
+		score += (Integer.parseInt(setting.setting.get(2).getAnswerOf(0))-Integer.parseInt(this.getAnswerOf(0)) / 50 ) * setting.getWeight("Otherk", 0);//price score
+		
+		score += (Integer.parseInt(setting.setting.get(2).getAnswerOf(1))-Integer.parseInt(this.getAnswerOf(1))) * setting.getWeight("Other", 1);//time score
+		
 		return score;
 	}
 
